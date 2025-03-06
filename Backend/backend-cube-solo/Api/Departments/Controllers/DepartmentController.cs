@@ -47,11 +47,5 @@ namespace backend_cube_solo.Api.Departments.Controllers
             await _departmentService.DeleteDepartment(id);
             return NoContent();
         }
-
-        [HttpGet("{departmentId}/employees")]
-        public async Task<IActionResult> GetEmployeesByDepartment(int departmentId, [FromQuery] PagedQueryParameters queryParams)
-        {
-            return Ok();
-        }
     }
 }
