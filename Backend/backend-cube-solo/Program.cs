@@ -8,6 +8,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.InjectDependencies();
 
+builder.WebHost.UseUrls("http://0.0.0.0:7213");
+
 var app = builder.Build();
 
 app.UseCustomExceptionHandler();
