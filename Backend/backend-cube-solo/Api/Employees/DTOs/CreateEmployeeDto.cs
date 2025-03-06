@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using backend_cube_solo.Shared.Validators;
 
 namespace backend_cube_solo.Api.Employees.DTOs
 {
@@ -14,10 +15,12 @@ namespace backend_cube_solo.Api.Employees.DTOs
 
         [Required]
         [StringLength(20)]
+        [PhoneValidator]
         public required string LandlinePhoneNumber { get; set; }
 
         [Required]
         [StringLength(20)]
+        [PhoneValidator]
         public required string MobilePhoneNumber { get; set; }
 
         [Required]
