@@ -9,6 +9,8 @@ using backend_cube_solo.Shared.Utils;
 using backend_cube_solo.Shared.Data;
 using backend_cube_solo.Api.Locations.Services;
 using backend_cube_solo.Api.Locations.Repositories;
+using backend_cube_solo.Api.Departments.Services;
+using backend_cube_solo.Api.Departments.Repositories;
 
 namespace backend_cube_solo.Shared.Extensions
 {
@@ -28,11 +30,13 @@ namespace backend_cube_solo.Shared.Extensions
         public static void AddServices(this WebApplicationBuilder builder)
         {
             builder.Services.AddScoped<ILocationService, LocationService>();
+            builder.Services.AddScoped<IDepartmentService, DepartmentService>();
         }
 
         public static void AddRepositories(this WebApplicationBuilder builder)
         {
             builder.Services.AddScoped<ILocationRepository, LocationRepository>();
+            builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
         }
 
         public static void AddJWT(this WebApplicationBuilder builder)
