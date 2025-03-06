@@ -1,5 +1,6 @@
 ﻿using backend_cube_solo.Api.Admins.DTOs;
 using backend_cube_solo.Api.Admins.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace backend_cube_solo.Api.Admins.Controllers
@@ -29,6 +30,7 @@ namespace backend_cube_solo.Api.Admins.Controllers
             return Ok(new {token});
         }
 
+        [Authorize]
         [HttpDelete("{employee_id}")]
         public async Task<IActionResult> Delete(int employee_id)
         {

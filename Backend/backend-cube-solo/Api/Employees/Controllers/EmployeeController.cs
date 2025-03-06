@@ -1,6 +1,7 @@
 ﻿using backend_cube_solo.Api.Employees.DTOs;
 using backend_cube_solo.Api.Employees.Filters;
 using backend_cube_solo.Api.Employees.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace backend_cube_solo.Api.Employees.Controllers
@@ -16,6 +17,7 @@ namespace backend_cube_solo.Api.Employees.Controllers
             _employeeService = employeeService;
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> CreateEmployee([FromBody] CreateEmployeeDto createEmployeeDto)
         {
@@ -34,12 +36,14 @@ namespace backend_cube_solo.Api.Employees.Controllers
             return Ok(await _employeeService.GetEmployee(id));
         }
 
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateEmployee(int id, [FromBody] UpdateEmployeeDto updateEmployeeDto)
         {
             return Ok(await _employeeService.UpdateEmployee(id, updateEmployeeDto));
         }
 
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteEmployee(int id)
         {

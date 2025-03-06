@@ -2,6 +2,7 @@
 using backend_cube_solo.Api.Locations.Filters;
 using backend_cube_solo.Api.Locations.Services;
 using backend_cube_solo.Shared.Pagination;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace backend_cube_solo.Api.Locations.Controllers
@@ -17,6 +18,7 @@ namespace backend_cube_solo.Api.Locations.Controllers
             _locationService = locationService;
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> CreateLocation([FromBody] CreateLocationDto createLocationDto)
         {
@@ -35,12 +37,14 @@ namespace backend_cube_solo.Api.Locations.Controllers
             return Ok(await _locationService.GetLocation(id));
         }
 
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateLocation(int id, [FromBody] UpdateLocationDto updateLocationDto)
         {
             return Ok(await _locationService.UpdateLocation(id, updateLocationDto));
         }
 
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteLocation(int id)
         {
