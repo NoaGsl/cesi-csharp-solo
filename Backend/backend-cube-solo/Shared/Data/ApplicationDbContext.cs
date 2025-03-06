@@ -121,8 +121,123 @@ public partial class ApplicationDbContext : DbContext
                 .HasColumnName("city");
         });
 
+        AddDefaultData(modelBuilder);
         OnModelCreatingPartial(modelBuilder);
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+
+    public void AddDefaultData(ModelBuilder modelBuilder)
+    {
+        AddDefaultDepartmentsData(modelBuilder);
+        AddDefaultLocationsData(modelBuilder);
+        AddDefaultEmployeesData(modelBuilder);
+    }
+
+    public void AddDefaultDepartmentsData(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Department>().HasData(
+            new Department
+            {
+                DepartmentId = 1,
+                Name = "IT"
+            },
+            new Department
+            {
+                DepartmentId = 2,
+                Name = "HR"
+            },
+            new Department
+            {
+                DepartmentId = 3,
+                Name = "Finance"
+            },
+            new Department
+            {
+                DepartmentId = 4,
+                Name = "Marketing"
+            },
+            new Department
+            {
+                DepartmentId = 5,
+                Name = "Sales"
+            }
+        );
+    }
+
+    public void AddDefaultLocationsData(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Location>().HasData(
+            new Location
+            {
+                LocationId = 1,
+                City = "Paris"
+            },
+            new Location
+            {
+                LocationId = 2,
+                City = "Nantes"
+            },
+            new Location
+            {
+                LocationId = 3,
+                City = "Toulouse"
+            },
+            new Location
+            {
+                LocationId = 4,
+                City = "Nice"
+            },
+            new Location
+            {
+                LocationId = 5,
+                City = "Lille"
+            }
+        );
+    }
+
+    public void AddDefaultEmployeesData(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Employee>().HasData(
+            new Employee
+            {
+                EmployeeId = 1,
+                FirstName = "Super",
+                LastName = "Admin",
+                LandlinePhoneNumber = "0123456789",
+                MobilePhoneNumber = "0123456789",
+                Email = "super.admin@gmail.com",
+                IsAdmin = true,
+                JoinDate = new DateOnly(2021, 1, 1),
+                LocationId = 1,
+                DepartmentId = 1
+            },
+            new Employee
+            {
+                EmployeeId = 2,
+                FirstName = "John",
+                LastName = "Doe",
+                LandlinePhoneNumber = "0123456789",
+                MobilePhoneNumber = "0123456789",
+                Email = "jhon.doe@gmail.com",
+                IsAdmin = false,
+                JoinDate = new DateOnly(2021, 1, 1),
+                LocationId = 1,
+                DepartmentId = 2
+            },
+            new Employee
+            {
+                EmployeeId = 3,
+                FirstName = "Pierre",
+                LastName = "Dupont",
+                LandlinePhoneNumber = "0123456789",
+                MobilePhoneNumber = "0123456789",
+                Email = "pierre.dupont@gmail.com",
+                IsAdmin = false,
+                JoinDate = new DateOnly(2021, 1, 1),
+                LocationId = 2,
+                DepartmentId = 3
+            }
+        );
+    }
 }

@@ -15,6 +15,12 @@ namespace backend_cube_solo.Api.Employees.Repositories
         {
         }
 
+        public async Task<Employee> GetByEmailAsync(string email)
+        {
+            Employee employee = await _context.Employees.FirstOrDefaultAsync(e => e.Email == email) ?? throw new KeyNotFoundException("Employee not found");
+            return employee;
+        }
+
         public async Task<PagedResult<ResponseEmployeeDto>> ListAsync(EmployeeQueryParams queryParams, CancellationToken cancellationToken = default)
         {
             IQueryable<ResponseEmployeeDto> query = _context.Employees

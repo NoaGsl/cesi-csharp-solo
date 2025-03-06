@@ -48,7 +48,7 @@ namespace backend_cube_solo.Api.Employees.Extensions
             employee.MobilePhoneNumber = updateEmployeeDto.MobilePhoneNumber ?? employee.MobilePhoneNumber;
             employee.Email = updateEmployeeDto.Email ?? employee.Email;
             employee.IsAdmin = updateEmployeeDto.IsAdmin ?? employee.IsAdmin;
-            employee.LeaveDate = updateEmployeeDto.LeaveDate ?? employee.LeaveDate;
+            employee.LeaveDate = updateEmployeeDto.LeaveDate;
             employee.LocationId = updateEmployeeDto.LocationId ?? employee.LocationId;
             employee.DepartmentId = updateEmployeeDto.DepartmentId ?? employee.DepartmentId;
         }

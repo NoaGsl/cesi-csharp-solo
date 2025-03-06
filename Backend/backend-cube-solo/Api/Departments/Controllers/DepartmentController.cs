@@ -2,6 +2,7 @@
 using backend_cube_solo.Api.Departments.Filters;
 using backend_cube_solo.Api.Departments.Services;
 using backend_cube_solo.Shared.Pagination;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace backend_cube_solo.Api.Departments.Controllers
@@ -17,6 +18,7 @@ namespace backend_cube_solo.Api.Departments.Controllers
             _departmentService = departmentService;
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> CreateDepartment([FromBody] CreateDepartmentDto createDepartmentDto)
         {
@@ -35,12 +37,14 @@ namespace backend_cube_solo.Api.Departments.Controllers
             return Ok(await _departmentService.GetDepartment(id));
         }
 
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateDepartment([FromRoute] int id, [FromBody] UpdateDepartmentDto updateDepartmentDto)
         {
             return Ok(await _departmentService.UpdateDepartment(id, updateDepartmentDto));
         }
 
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteDepartment([FromRoute] int id)
         {

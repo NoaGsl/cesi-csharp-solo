@@ -8,6 +8,7 @@ namespace backend_cube_solo.Api.Employees.Repositories
 {
     public interface IEmployeeRepository : IBaseRepository<Employee>
     {
+        Task<Employee> GetByEmailAsync(string email);
         Task<PagedResult<ResponseEmployeeDto>> ListAsync(EmployeeQueryParams queryParams, CancellationToken cancellationToken = default);
     }
 }
