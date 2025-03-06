@@ -47,11 +47,5 @@ namespace backend_cube_solo.Api.Locations.Controllers
             await _locationService.DeleteLocation(id);
             return NoContent();
         }
-
-        [HttpGet("{locationId}/employees")]
-        public async Task<IActionResult> GetEmployeesByLocation(int locationId, [FromQuery] PagedQueryParameters queryParams)
-        {
-            return Ok();
-        }
     }
 }
