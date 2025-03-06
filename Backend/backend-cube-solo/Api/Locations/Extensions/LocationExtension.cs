@@ -5,7 +5,7 @@ namespace backend_cube_solo.Api.Locations.Extensions
 {
     public static class LocationExtension
     {
-        public static Location toModel(this CreateLocationDto createLocationDto)
+        public static Location ToModel(this CreateLocationDto createLocationDto)
         {
             return new Location
             {
@@ -13,7 +13,7 @@ namespace backend_cube_solo.Api.Locations.Extensions
             };
         }
 
-        public static ResponseLocationDto toResponseDto(this Location location)
+        public static ResponseLocationDto ToResponseDto(this Location location)
         {
             return new ResponseLocationDto
             {

@@ -18,11 +18,11 @@ namespace backend_cube_solo.Api.Locations.Services
 
         public async Task<ResponseLocationDto> CreateLocation(CreateLocationDto createLocationDto)
         {
-            Location location = createLocationDto.toModel();
+            Location location = createLocationDto.ToModel();
             
             Location addedLocation = await _locationRepository.AddAsync(location);
 
-            return addedLocation.toResponseDto();
+            return addedLocation.ToResponseDto();
         }
 
         public async Task<PagedResult<ResponseLocationDto>> ListLocations(LocationQueryParams queryParams)
@@ -33,7 +33,7 @@ namespace backend_cube_solo.Api.Locations.Services
         public async Task<ResponseLocationDto> GetLocation(int id)
         {
             Location location = await _locationRepository.FindAsync(id) ?? throw new KeyNotFoundException("Location not found");
-            return location.toResponseDto();
+            return location.ToResponseDto();
         }
 
         public async Task<ResponseLocationDto> UpdateLocation(int id, UpdateLocationDto updateLocationDto)
@@ -43,7 +43,7 @@ namespace backend_cube_solo.Api.Locations.Services
             location.City = updateLocationDto.City;
 
             await _locationRepository.UpdateAsync(location);
-            return location.toResponseDto();
+            return location.ToResponseDto();
         }
 
         public async Task DeleteLocation(int id)
