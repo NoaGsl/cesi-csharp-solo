@@ -1,4 +1,6 @@
-﻿using backend_cube_solo.Api.Locations.DTOs;
+﻿using backend_cube_solo.Api.Employees.Models;
+using backend_cube_solo.Api.Employees.Repositories;
+using backend_cube_solo.Api.Locations.DTOs;
 using backend_cube_solo.Api.Locations.Extensions;
 using backend_cube_solo.Api.Locations.Filters;
 using backend_cube_solo.Api.Locations.Models;
@@ -10,10 +12,12 @@ namespace backend_cube_solo.Api.Locations.Services
     public class LocationService : ILocationService
     {
         private readonly ILocationRepository _locationRepository;
+        private readonly IEmployeeRepository _employeeRepository;
 
-        public LocationService(ILocationRepository locationRepository)
+        public LocationService(ILocationRepository locationRepository, IEmployeeRepository employeeRepository)
         {
             _locationRepository = locationRepository;
+            _employeeRepository = employeeRepository;
         }
 
         public async Task<ResponseLocationDto> CreateLocation(CreateLocationDto createLocationDto)
@@ -48,6 +52,13 @@ namespace backend_cube_solo.Api.Locations.Services
 
         public async Task DeleteLocation(int id)
         {
+            Employee employee = await _employeeRepository.FirstOrDefaultAsync(e => e.LocationId == id);
+
+            if (employee != null)
+            {
+                throw new Exception("Location still has employees");
+            }
+
             Location location = await _locationRepository.FindAsync(id) ?? throw new KeyNotFoundException("Location not found");
             await _locationRepository.DeleteAsync(location);
         }
