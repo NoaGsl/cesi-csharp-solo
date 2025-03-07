@@ -32,6 +32,11 @@ namespace backend_cube_solo.Api.Admins.Services
                 throw new Exception("Employee is not an admin");
             }
 
+            if (await _adminRepository.AnyAsync(a => a.EmployeeId == existingEmployee.EmployeeId))
+            {
+                throw new Exception("Admin already exists");
+            }
+
             string hashedPassword = PasswordUtils.HashPassword(registerDto.Password, out var salt);
 
             Admin admin = new()
