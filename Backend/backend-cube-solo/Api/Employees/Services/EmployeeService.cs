@@ -26,7 +26,13 @@ namespace backend_cube_solo.Api.Employees.Services
         {
             _ = await _locationRepository.FindAsync(createEmployeeDto.LocationId) ?? throw new KeyNotFoundException("Location not found");
             _ = await _departmentRepository.FindAsync(createEmployeeDto.DepartmentId) ?? throw new KeyNotFoundException("Department not found");
-            _ = await _employeeRepository.FindByEmailAsync(createEmployeeDto.Email) ?? throw new Exception("Employee with this email already exists");
+
+            var foundEmployee = await _employeeRepository.FirstOrDefaultAsync(e => e.Email == createEmployeeDto.Email);
+
+            if (foundEmployee != null)
+            {
+                throw new Exception("Employee with this email already exists");
+            }
 
             Employee employee = createEmployeeDto.ToModel();
 
