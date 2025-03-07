@@ -19,6 +19,7 @@ namespace backend_cube_solo.Api.Locations.Repositories
             IQueryable<ResponseLocationDto> query =
                 _context.Locations
                 .AsNoTracking()
+                .OrderBy(location => location.LocationId)
                 .Select(location => new ResponseLocationDto
                 {
                     Id = location.LocationId,

@@ -24,6 +24,8 @@ namespace backend_cube_solo.Api.Employees.Repositories
         public async Task<PagedResult<ResponseEmployeeDto>> ListAsync(EmployeeQueryParams queryParams, CancellationToken cancellationToken = default)
         {
             IQueryable<ResponseEmployeeDto> query = _context.Employees
+                .AsNoTracking()
+                .OrderBy(e => e.EmployeeId)
                 .Select(e => new ResponseEmployeeDto
                 {
                     Id = e.EmployeeId,
