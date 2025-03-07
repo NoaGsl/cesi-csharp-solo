@@ -67,6 +67,16 @@ namespace backend_cube_solo.Api.Employees.Services
                 _ = await _departmentRepository.FindAsync(updateEmployeeDto.DepartmentId.Value) ?? throw new KeyNotFoundException("Department not found");
             }
 
+            if (updateEmployeeDto.Email != employee.Email)
+            {
+                var foundEmployee = await _employeeRepository.FirstOrDefaultAsync(e => e.Email == updateEmployeeDto.Email);
+
+                if (foundEmployee != null)
+                {
+                    throw new Exception("Employee with this email already exists");
+                }
+            }
+
             if (updateEmployeeDto.LeaveDate.HasValue && updateEmployeeDto.LeaveDate.Value < employee.JoinDate)
             {
                 throw new Exception("Leave date cannot be before join date");
