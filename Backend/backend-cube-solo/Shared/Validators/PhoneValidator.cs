@@ -17,7 +17,7 @@ public class PhoneValidator : ValidationAttribute
             return false;
         }
 
-        var regex = new Regex(@"[0-9]{20}");
+        var regex = new Regex(@"[0-9]{10}");
 
         if (!regex.IsMatch(input))
         {
