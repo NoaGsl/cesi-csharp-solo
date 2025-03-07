@@ -19,6 +19,7 @@ namespace backend_cube_solo.Api.Departments.Repositories
         {
             IQueryable<ResponseDepartmentDto> query = _context.Departments
                 .AsNoTracking()
+                .OrderBy(d => d.DepartmentId)
                 .Select(d => new ResponseDepartmentDto
                 {
                     Id = d.DepartmentId,
