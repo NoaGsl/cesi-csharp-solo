@@ -93,14 +93,17 @@ namespace backend_cube_solo.Api.Admins.Services
 
         public async Task Delete(int employee_id)
         {
-            Admin admin = await _adminRepository.FirstOrDefaultAsync(a => a.EmployeeId == employee_id) ?? throw new Exception("Admin not found");
-
             // Remove employee admin status
             Employee employee = await _employeeRepository.FindAsync(employee_id) ?? throw new Exception("Employee not found");
             employee.IsAdmin = false;
             await _employeeRepository.UpdateAsync(employee);
 
-            await _adminRepository.DeleteAsync(admin);
+            Admin admin = await _adminRepository.FirstOrDefaultAsync(a => a.EmployeeId == employee_id);
+
+            if (admin != null)
+            {
+                await _adminRepository.DeleteAsync(admin);
+            }
         }
     }
 }
