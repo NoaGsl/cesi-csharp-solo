@@ -5,11 +5,9 @@ export async function GET(request: Request) {
     const url = new URL(request.url);
     const page = url.searchParams.get("page") || "1";
     const search = url.searchParams.get("search") || "";
-    const departmentId = url.searchParams.get("department_id") || "";
-    const locationId = url.searchParams.get("location_id") || "";
 
     const response = await fetch(
-      `${process.env.API_URL}/employees?page=${page}&search_term=${search}&department_id=${departmentId}&location_id=${locationId}`
+      `${process.env.API_URL}/departments?page=${page}&name=${search}`
     );
     const data = await response.json();
     

@@ -22,7 +22,7 @@ const EmployeeQuickInformations = ({ employee }: { employee: IEmployee }) => {
   return (
     <div
       onClick={() => handleClick()}
-      className="bg-white border p-4 mb-4 rounded-xl w-full mx-auto"
+      className="bg-white border p-4 mb-4 rounded-xl w-full mx-auto cursor-pointer hover:shadow-xl"
     >
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
         <p className="truncate">

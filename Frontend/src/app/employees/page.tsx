@@ -1,16 +1,14 @@
 "use client";
 
 import EmployeeList from "@/components/Employee/EmployeeList";
+import EmployeeFiltersBar from "@/components/Employee/EmployeeFiltersBar";
 import { IEmployee, IPagedResponse } from "@/lib/types";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
-import { Suspense } from "react";
-
+import { useCallback, useEffect, useState, Suspense } from "react";
 
 const EmployeesPage = () => {
   return (
-    // Had an issue with the build, so I added a Suspense component
-    <Suspense fallback={<div>Chargement...</div>}>
+    <Suspense fallback={<div>Loading...</div>}>
       <Employees />
     </Suspense>
   );
@@ -26,19 +24,11 @@ const Employees = () => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const [search, setSearch] = useState<string>(
-    searchParams.get("search") || ""
-  );
 
-  const createQueryString = useCallback(
-    (name: string, value: string) => {
-      const params = new URLSearchParams(searchParams.toString());
-      params.set(name, value);
-
-      return params.toString();
-    },
-    [searchParams]
-  );
+  // Get current filter values from the URL
+  const search = searchParams.get("search") || "";
+  const departmentId = searchParams.get("department_id") || "";
+  const locationId = searchParams.get("location_id") || "";
 
   const loadMore = async () => {
     if (employees && page < employees.totalPages) {
@@ -46,7 +36,7 @@ const Employees = () => {
       const nextPage = page + 1;
 
       const response = await fetch(
-        `/api/employees?page=${nextPage}&search=${search}`
+        `/api/employees?page=${nextPage}&search=${search}&department_id=${departmentId}&location_id=${locationId}`
       );
       const data = await response.json();
 
@@ -73,12 +63,14 @@ const Employees = () => {
       setPage(firstPage);
 
       const response = await fetch(
-        `/api/employees?page=${firstPage}&search=${search}`
+        `/api/employees?page=${firstPage}&search=${search}&department_id=${departmentId}&location_id=${locationId}`
       );
       const data = await response.json();
 
-      const queryString = createQueryString("search", search);
-      router.push(`${pathname}?${queryString}`);
+      // Update URL with current search while preserving other filters
+      const params = new URLSearchParams(searchParams.toString());
+      params.set("search", search);
+      router.push(`${pathname}?${params.toString()}`);
 
       setEmployees(data);
       setLoading(false);
@@ -90,24 +82,15 @@ const Employees = () => {
       const timeout = setTimeout(fetchEmployees, 500);
       return () => clearTimeout(timeout);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [search]);
-
-  useEffect(() => {
-    setSearch(searchParams.get("search") || "");
-  }, [searchParams]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [search, departmentId, locationId]);
 
   return (
     <div className="flex flex-col items-center">
-      <input
-        type="text"
-        placeholder="Chercher un employé..."
-        className="w-8/10 md:w-9/10 lg:w-7/10 p-2 my-4 focus:border-black focus:outline-none border border-gray-300 rounded-md"
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-      />
+      <h1 className="text-2xl font-bold my-4">Liste des employés</h1>
 
-      <h1 className="text-2xl font-bold mb-4">Employés</h1>
+      <EmployeeFiltersBar />
+
       <EmployeeList
         employees={employees}
         loading={loading}
