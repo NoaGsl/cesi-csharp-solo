@@ -25,7 +25,7 @@ const Login = () => {
 
     if (response.ok) {
       toast.success("Connexion réussie!");
-      router.push("/register");
+      router.push("/employees");
     } else {
       const errorData = await response.json();
       toast.error(errorData.message || "Connexion échouée");
@@ -33,33 +33,35 @@ const Login = () => {
   };
 
   return (
-    <AuthFormWrapper title="Connexion">
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <Input
-          label="Email"
-          id="login-email"
-          type="email"
-          placeholder="Entrer votre email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <Input
-          label="Mot de passe"
-          id="login-password"
-          type="password"
-          placeholder="Entrer votre mot de passe"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <Button type="submit">Connexion</Button>
-      </form>
-      <p className="mt-4 text-center text-sm">
-        Pas encore de compte?{" "}
-        <Link href="/register" className="text-blue-500 hover:underline">
-          Inscrivez-vous ici
-        </Link>
-      </p>
-    </AuthFormWrapper>
+    <div className="flex justify-center items-center h-screen">
+      <AuthFormWrapper title="Connexion">
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <Input
+            label="Email"
+            id="login-email"
+            type="email"
+            placeholder="Entrer votre email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <Input
+            label="Mot de passe"
+            id="login-password"
+            type="password"
+            placeholder="Entrer votre mot de passe"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <Button type="submit">Connexion</Button>
+        </form>
+        <p className="mt-4 text-center text-sm">
+          Pas encore de compte?{" "}
+          <Link href="/register" className="text-blue-500 hover:underline">
+            Inscrivez-vous ici
+          </Link>
+        </p>
+      </AuthFormWrapper>
+    </div>
   );
 };
 

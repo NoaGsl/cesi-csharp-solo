@@ -7,10 +7,12 @@ interface AuthFormWrapperProps {
   children: ReactNode;
 }
 
-const AuthFormWrapper: React.FC<AuthFormWrapperProps> = ({ title, children }) => {
+const AuthFormWrapper = ({ title, children }: AuthFormWrapperProps) => {
   return (
-    <div className="max-w-md mx-auto mt-20 p-6 bg-white shadow-md rounded-md">
-      {title && <h2 className="text-2xl font-bold mb-6 text-center">{title}</h2>}
+    <div className="max-w-md p-6 bg-white shadow-md rounded-md">
+      {title && (
+        <h2 className="text-2xl font-bold mb-6 text-center">{title}</h2>
+      )}
       {children}
     </div>
   );

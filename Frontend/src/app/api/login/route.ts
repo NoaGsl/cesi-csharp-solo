@@ -32,11 +32,9 @@ export async function POST(request: Request) {
     });
 
     return res;
-  } catch (error: any) {
-    console.error("Login error:", error);
-    return NextResponse.json(
-      { message: error.message || "An unexpected error occurred" },
-      { status: 500 }
-    );
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    }
   }
 }

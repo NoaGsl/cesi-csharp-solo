@@ -23,11 +23,9 @@ export async function POST(request: Request) {
       { message: "Registration successful" },
       { status: 200 }
     );
-  } catch (error: any) {
-    console.error("Registration error:", error);
-    return NextResponse.json(
-      { message: error.message || "An unexpected error occurred" },
-      { status: 500 }
-    );
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    }
   }
 }
