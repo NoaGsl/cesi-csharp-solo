@@ -12,7 +12,7 @@ const ModeSwitcherText = ({ mode, setMode }: ModeSwitcherTextProps) => {
           <button
             type="button"
             onClick={() => setMode("register")}
-            className="text-blue-500 hover:underline"
+            className="text-blue-500 hover:underline cursor-pointer"
           >
             Inscrivez-vous ici
           </button>
@@ -23,7 +23,7 @@ const ModeSwitcherText = ({ mode, setMode }: ModeSwitcherTextProps) => {
           <button
             type="button"
             onClick={() => setMode("login")}
-            className="text-blue-500 hover:underline"
+            className="text-blue-500 hover:underline cursor-pointer"
           >
             Connectez-vous ici
           </button>

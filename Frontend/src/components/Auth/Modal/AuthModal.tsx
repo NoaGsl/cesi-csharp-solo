@@ -6,7 +6,7 @@ import Input from "@/components/Forms/Input";
 import Button from "@/components/Forms/Button";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import ModeSwitcherText from "./Modal/ModeSwitcherText";
+import ModeSwitcherText from "./ModeSwitcherText";
 
 interface AuthModalProps {
   setShowModal: (showModal: boolean) => void;

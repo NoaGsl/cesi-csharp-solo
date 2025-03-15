@@ -1,9 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import AuthModal from "../Auth/AuthModal";
 import { useAuth } from "@/hooks/AuthContext";
 import Header from "./Header";
+import AuthModal from "../Auth/Modal/AuthModal";
 
 const AppWrapper = ({ children }: { children: React.ReactNode }) => {
   const { isConnected, setIsConnected } = useAuth();
