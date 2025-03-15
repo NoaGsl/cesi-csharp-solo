@@ -7,6 +7,7 @@ import { useAuth } from "@/hooks/AuthContext";
 const AppWrapper = ({ children }: { children: React.ReactNode }) => {
   const { isConnected, setIsConnected } = useAuth();
   const [showModal, setShowModal] = useState(false);
+  // eslint-disable-next-line
   const [inputSequence, setInputSequence] = useState("");
   
   useEffect(() => {

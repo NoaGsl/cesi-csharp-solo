@@ -2,7 +2,6 @@
 
 import { IEmployee } from "@/lib/types";
 import { useEffect, useState } from "react";
-import Link from "next/link";
 
 interface EmployeeDetailProps {
   id: string;

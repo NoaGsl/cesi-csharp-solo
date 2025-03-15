@@ -1,6 +1,5 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import AuthFormWrapper from "@/components/Auth/AuthFormWrapper";
 import Input from "@/components/Forms/Input";
@@ -18,7 +17,6 @@ const AuthModal = ({ setShowModal, setIsConnected }: AuthModalProps) => {
   const [mode, setMode] = useState<"login" | "register">("login");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

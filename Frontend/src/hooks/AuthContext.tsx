@@ -10,6 +10,7 @@ import {
 
 const AuthContext = createContext({
   isConnected: false,
+  // eslint-disable-next-line
   setIsConnected: (value: boolean) => {},
 });
 
@@ -33,7 +34,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     };
 
     checkAuth();
-    console.log("AuthProvider mounted");
   }, [isConnected]);
 
   return (

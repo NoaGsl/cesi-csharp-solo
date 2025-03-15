@@ -4,7 +4,7 @@ import EmployeeList from "@/components/Employee/EmployeeList";
 import EmployeeFiltersBar from "@/components/Employee/EmployeeFiltersBar";
 import { IEmployee, IPagedResponse } from "@/lib/types";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useCallback, useEffect, useState, Suspense } from "react";
+import { useEffect, useState, Suspense } from "react";
 
 const EmployeesPage = () => {
   return (
