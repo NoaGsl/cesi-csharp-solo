@@ -46,9 +46,6 @@ const LocationFilter = () => {
         setSelectedLocation(location);
         setSearchTerm(location.city);
       }
-    }else {
-      setSelectedLocation(null);
-      setSearchTerm("");
     }
   }, [locations, searchParams]);
 

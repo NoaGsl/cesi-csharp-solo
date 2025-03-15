@@ -45,9 +45,6 @@ const DepartmentFilter = () => {
         setSelectedDepartment(department);
         setSearchTerm(department.name);
       }
-    } else {
-      setSelectedDepartment(null);
-      setSearchTerm("");
     }
   }, [departments, searchParams]);
 
