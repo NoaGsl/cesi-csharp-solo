@@ -7,8 +7,8 @@ export interface IEmployee {
   email: string;
   departmentId: number;
   locationId: number;
-  department?: Department;
-  location?: Location;
+  department?: IDepartment;
+  location?: ILocation;
 }
 
 export interface IPagedResponse<T> {
@@ -19,12 +19,12 @@ export interface IPagedResponse<T> {
   totalPages: number;
 }
 
-export interface Department {
+export interface IDepartment {
   id: number;
   name: string;
 }
 
-export interface Location {
+export interface ILocation {
   id: number;
   city: string;
 }
