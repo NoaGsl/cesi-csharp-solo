@@ -2,14 +2,16 @@
 
 import { useEffect, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { ILocation } from "@/lib/types";
+import { ILocation, IPagedResponse } from "@/lib/types";
 
 const LocationFilter = () => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const [locations, setLocations] = useState<ILocation[]>([]);
+  const [locations, setLocations] = useState<IPagedResponse<ILocation> | null>(
+    null
+  );
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [selectedLocation, setSelectedLocation] = useState<ILocation | null>(
     null
@@ -20,7 +22,7 @@ const LocationFilter = () => {
     try {
       const response = await fetch(`/api/locations?search=${search}`);
       const data = await response.json();
-      setLocations(data.items || data);
+      setLocations(data);
     } catch (error) {
       console.error("Error fetching locations", error);
     }
@@ -36,23 +38,26 @@ const LocationFilter = () => {
   useEffect(() => {
     const locationIdParam = searchParams.get("location_id");
 
-    if (locationIdParam && locations.length > 0) {
-      const locId = Number(locationIdParam);
-      const loc = locations.find((l) => l.id === locId);
+    if (locationIdParam && locations && locations.items.length > 0) {
+      const locationId = Number(locationIdParam);
+      const location = locations.items.find((l) => l.id === locationId);
 
-      if (loc) {
-        setSelectedLocation(loc);
-        setSearchTerm(loc.city);
+      if (location) {
+        setSelectedLocation(location);
+        setSearchTerm(location.city);
       }
+    }else {
+      setSelectedLocation(null);
+      setSearchTerm("");
     }
   }, [locations, searchParams]);
 
-  const selectLocation = (loc: ILocation) => {
-    setSelectedLocation(loc);
-    setSearchTerm(loc.city);
+  const selectLocation = (location: ILocation) => {
+    setSelectedLocation(location);
+    setSearchTerm(location.city);
 
     const params = new URLSearchParams(searchParams.toString());
-    params.set("location_id", loc.id.toString());
+    params.set("location_id", location.id.toString());
     router.push(`${pathname}?${params.toString()}`);
 
     setShowSuggestions(false);
@@ -82,17 +87,17 @@ const LocationFilter = () => {
         onFocus={() => setShowSuggestions(true)}
         onBlur={() => setShowSuggestions(false)}
       />
-      {showSuggestions && locations.length > 0 && (
+      {showSuggestions && locations && locations.items.length > 0 && (
         <ul className="absolute bg-white border border-black p-2 max-h-24 overflow-y-auto rounded w-full z-10">
-          {locations.map((loc) => (
+          {locations.items.map((location) => (
             <li
-              key={loc.id}
-              onMouseDown={() => selectLocation(loc)}
+              key={location.id}
+              onMouseDown={() => selectLocation(location)}
               className={`cursor-pointer ${
-                selectedLocation?.id === loc.id ? "font-bold" : ""
+                selectedLocation?.id === location.id ? "font-bold" : ""
               }`}
             >
-              {loc.city}
+              {location.city}
             </li>
           ))}
         </ul>

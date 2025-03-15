@@ -2,14 +2,15 @@
 
 import { useEffect, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { IDepartment } from "@/lib/types";
+import { IDepartment, IPagedResponse } from "@/lib/types";
 
 const DepartmentFilter = () => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const [departments, setDepartments] = useState<IDepartment[]>([]);
+  const [departments, setDepartments] =
+    useState<IPagedResponse<IDepartment> | null>(null);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [selectedDepartment, setSelectedDepartment] =
     useState<IDepartment | null>(null);
@@ -20,7 +21,7 @@ const DepartmentFilter = () => {
       const response = await fetch(`/api/departments?search=${search}`);
       const data = await response.json();
 
-      setDepartments(data.items || data);
+      setDepartments(data);
     } catch (error) {
       console.error("Error fetching departments", error);
     }
@@ -36,23 +37,26 @@ const DepartmentFilter = () => {
   useEffect(() => {
     const departmentIdParam = searchParams.get("department_id");
 
-    if (departmentIdParam && departments.length > 0) {
-      const deptId = Number(departmentIdParam);
-      const dept = departments.find((d) => d.id === deptId);
+    if (departmentIdParam && departments && departments.items.length > 0) {
+      const departmentId = Number(departmentIdParam);
+      const department = departments.items.find((d) => d.id === departmentId);
 
-      if (dept) {
-        setSelectedDepartment(dept);
-        setSearchTerm(dept.name);
+      if (department) {
+        setSelectedDepartment(department);
+        setSearchTerm(department.name);
       }
+    } else {
+      setSelectedDepartment(null);
+      setSearchTerm("");
     }
   }, [departments, searchParams]);
 
-  const selectDepartment = (dept: IDepartment) => {
-    setSelectedDepartment(dept);
-    setSearchTerm(dept.name);
+  const selectDepartment = (department: IDepartment) => {
+    setSelectedDepartment(department);
+    setSearchTerm(department.name);
 
     const params = new URLSearchParams(searchParams.toString());
-    params.set("department_id", dept.id.toString());
+    params.set("department_id", department.id.toString());
     router.push(`${pathname}?${params.toString()}`);
 
     setShowSuggestions(false);
@@ -82,17 +86,18 @@ const DepartmentFilter = () => {
         onFocus={() => setShowSuggestions(true)}
         onBlur={() => setShowSuggestions(false)}
       />
-      {showSuggestions && departments.length > 0 && (
+
+      {showSuggestions && departments && departments.items.length > 0 && (
         <ul className="absolute bg-white border border-black p-2 max-h-24 overflow-y-auto rounded w-full z-10">
-          {departments.map((dept) => (
+          {departments.items.map((department) => (
             <li
-              key={dept.id}
-              onMouseDown={() => selectDepartment(dept)}
+              key={department.id}
+              onMouseDown={() => selectDepartment(department)}
               className={`cursor-pointer ${
-                selectedDepartment?.id === dept.id ? "font-bold" : ""
+                selectedDepartment?.id === department.id ? "font-bold" : ""
               }`}
             >
-              {dept.name}
+              {department.name}
             </li>
           ))}
         </ul>
