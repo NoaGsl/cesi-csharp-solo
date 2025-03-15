@@ -1,5 +1,7 @@
-﻿using backend_cube_solo.Api.Employees.DTOs;
+﻿using backend_cube_solo.Api.Departments.Extensions;
+using backend_cube_solo.Api.Employees.DTOs;
 using backend_cube_solo.Api.Employees.Models;
+using backend_cube_solo.Api.Locations.Extensions;
 
 namespace backend_cube_solo.Api.Employees.Extensions
 {

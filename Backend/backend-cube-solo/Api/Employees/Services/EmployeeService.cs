@@ -48,9 +48,7 @@ namespace backend_cube_solo.Api.Employees.Services
 
         public async Task<ResponseEmployeeDto> GetEmployee(int id)
         {
-            Employee employee = await _employeeRepository.FindAsync(id) ?? throw new KeyNotFoundException("Employee not found");
-
-            return employee.ToResponseEmployeeDto();
+            return await _employeeRepository.GetById(id);
         }
 
         public async Task<ResponseEmployeeDto> UpdateEmployee(int id, UpdateEmployeeDto updateEmployeeDto)
