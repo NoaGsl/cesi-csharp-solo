@@ -28,7 +28,7 @@ const NewDepartmentForm = ({ RefreshDepartments }: NewDepartmentFormProps) => {
 
       setName("");
       RefreshDepartments();
-      toast.success("Département ajouté avec succès");
+      toast.success("Service ajouté avec succès");
     } catch (err: any) {
       toast.error(err.message);
     } finally {
