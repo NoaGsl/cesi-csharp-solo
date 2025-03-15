@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import ClientSideToastContainer from "@/components/Toastify/ToastContainer";
 import AppWrapper from "@/components/Shared/AppWrapper";
+import { AuthProvider } from "@/hooks/AuthContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,10 +30,12 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <AppWrapper>
-          <ClientSideToastContainer />
-          {children}
-        </AppWrapper>
+        <AuthProvider>
+          <AppWrapper>
+            <ClientSideToastContainer />
+            {children}
+          </AppWrapper>
+        </AuthProvider>
       </body>
     </html>
   );

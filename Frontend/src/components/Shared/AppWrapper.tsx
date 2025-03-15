@@ -2,31 +2,13 @@
 
 import { useState, useEffect } from "react";
 import AuthModal from "../Auth/AuthModal";
+import { useAuth } from "@/hooks/AuthContext";
 
 const AppWrapper = ({ children }: { children: React.ReactNode }) => {
+  const { isConnected, setIsConnected } = useAuth();
   const [showModal, setShowModal] = useState(false);
   const [inputSequence, setInputSequence] = useState("");
-  const [isConnected, setIsConnected] = useState(false);
-
-  useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        const response = await fetch("/api/auth/check-auth", {
-          credentials: "include",
-        });
-        const data = await response.json();
-
-        if (data.authenticated == true) {
-          setIsConnected(true);
-        }
-      } catch (err) {
-        console.error(err);
-      }
-    };
-
-    checkAuth();
-  }, []);
-
+  
   useEffect(() => {
     const secretSequence = process.env.NEXT_PUBLIC_ADMIN_SEQUENCE || "admin";
     const secretSequenceLength = secretSequence.length;
@@ -34,22 +16,19 @@ const AppWrapper = ({ children }: { children: React.ReactNode }) => {
     const handleKeyDown = (e: KeyboardEvent) => {
       setInputSequence((prev) => {
         const updatedSequence = (prev + e.key).slice(-secretSequenceLength);
+        
         if (updatedSequence === secretSequence) {
           setShowModal(true);
         }
+        
         return updatedSequence;
       });
     };
 
-    if (isConnected) {
-      window.removeEventListener("keydown", handleKeyDown);
-      console.log("Connected");
-      return;
+    if (!isConnected) {
+      window.addEventListener("keydown", handleKeyDown);
     }
 
-    window.addEventListener("keydown", handleKeyDown);
-
-    // So it doesnt add multiple event listeners at the same time
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
