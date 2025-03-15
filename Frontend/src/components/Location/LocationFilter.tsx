@@ -76,7 +76,7 @@ const LocationFilter = () => {
       <input
         className="p-2 rounded border border-black w-full focus:outline-none focus:ring focus:ring-black"
         type="text"
-        placeholder="Chercher dans une ville"
+        placeholder="Chercher dans un site"
         value={searchTerm}
         onChange={handleInputChange}
         onFocus={() => setShowSuggestions(true)}
