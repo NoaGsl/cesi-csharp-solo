@@ -1,6 +1,8 @@
-﻿using backend_cube_solo.Api.Employees.DTOs;
+﻿using backend_cube_solo.Api.Departments.DTOs;
+using backend_cube_solo.Api.Employees.DTOs;
 using backend_cube_solo.Api.Employees.Filters;
 using backend_cube_solo.Api.Employees.Models;
+using backend_cube_solo.Api.Locations.DTOs;
 using backend_cube_solo.Shared.Data;
 using backend_cube_solo.Shared.Pagination;
 using backend_cube_solo.Shared.Repositories;
@@ -38,7 +40,21 @@ namespace backend_cube_solo.Api.Employees.Repositories
                     JoinDate = e.JoinDate,
                     LeaveDate = e.LeaveDate,
                     LocationId = e.LocationId,
-                    DepartmentId = e.DepartmentId
+                    DepartmentId = e.DepartmentId,
+                    Location = queryParams.details == true 
+                        ? new ResponseLocationDto 
+                            { 
+                                Id = e.Location.LocationId, 
+                                City = e.Location.City 
+                            }
+                        : null,
+                    Department = queryParams.details == true 
+                        ? new ResponseDepartmentDto 
+                            { 
+                                Id = e.Department.DepartmentId, 
+                                Name = e.Department.Name 
+                            }
+                        : null
                 });
 
             // Filter by a general search term across several fields

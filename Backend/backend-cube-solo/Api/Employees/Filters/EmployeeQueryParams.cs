@@ -6,6 +6,7 @@ namespace backend_cube_solo.Api.Employees.Filters
     {
         // A general search term that can match across multiple fields
         public string? search_term { get; set; }
+        public bool? details { get; set; }
 
         // Optional filters
         public int? location_id { get; set; }
