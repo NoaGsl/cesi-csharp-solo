@@ -36,7 +36,7 @@ const EmployeeDetails = ({ id }: EmployeeDetailProps) => {
     <main className="min-h-screen bg-gray-100 p-8 flex items-center justify-center">
       <button
         onClick={() => window.history.back()}
-        className="fixed top-8 left-8 p-2 border-2 bg-white rounded-md hover:bg-gray-100 cursor-pointer"
+        className="fixed top-24 left-8 p-2 border-2 bg-white rounded-md hover:bg-gray-100 cursor-pointer"
       >
         Retour
       </button>
