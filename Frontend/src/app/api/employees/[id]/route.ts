@@ -50,7 +50,6 @@ export async function PUT(request: NextRequest, { params }: RequestProps) {
       return NextResponse.json(data, { status: 400 });
     }
 
-    console.error(data);
     return NextResponse.json(data, { status: response.status });
   } catch (error: unknown) {
     if (error instanceof Error) {
@@ -80,7 +79,8 @@ export async function DELETE(request: NextRequest, { params }: RequestProps) {
     }
 
     const data = await response.json();
-    throw new Error(data.ExceptionMessage);
+
+    return NextResponse.json(data, { status: response.status });
   } catch (error: unknown) {
     if (error instanceof Error) {
       return NextResponse.json({ error: error.message }, { status: 500 });

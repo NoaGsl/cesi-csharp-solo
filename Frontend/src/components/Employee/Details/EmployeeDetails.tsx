@@ -43,9 +43,29 @@ const EmployeeDetails = ({ id }: EmployeeDetailProps) => {
       if (response.ok) {
         router.push("/employees");
         toast.success("Employé supprimé avec succès");
-      } else {
-        console.error("Erreur lors de la suppression de l'employé");
+        return;
       }
+
+      const data = await response.json();
+
+      if (response.status === 400 && data.errors) {
+        Object.values(data.errors as { [key: string]: string[] }).forEach(
+          (messages: string[]) => {
+            messages.forEach((message: string) => {
+              toast.error(message);
+            });
+          }
+        );
+        return;
+      }
+
+      // Custom error message from the api
+      if (data.ExceptionMessage) {
+        toast.error(data.ExceptionMessage);
+        return;
+      }
+
+      toast.error("Erreur lors de la supression de l'employé");
     } catch (error) {
       console.error("Erreur lors de la suppression de l'employé:", error);
     }

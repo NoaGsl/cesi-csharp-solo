@@ -40,6 +40,13 @@ namespace backend_cube_solo.Api.Employees.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateEmployee(int id, [FromBody] UpdateEmployeeDto updateEmployeeDto)
         {
+            var currentUserId = int.Parse(User.Claims.FirstOrDefault(c => c.Type == "EmployeeID")?.Value ?? "-1");
+
+            if (currentUserId == id)
+            {
+                throw new ArgumentException("Admins cannot update their own account.");
+            }
+
             return Ok(await _employeeService.UpdateEmployee(id, updateEmployeeDto));
         }
 
@@ -47,6 +54,13 @@ namespace backend_cube_solo.Api.Employees.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteEmployee(int id)
         {
+            var currentUserId = int.Parse(User.Claims.FirstOrDefault(c => c.Type == "EmployeeID")?.Value ?? "-1");
+
+            if (currentUserId == id)
+            {
+                throw new ArgumentException("Admins cannot delete their own account.");
+            }
+
             await _employeeService.DeleteEmployee(id);
             return NoContent();
         }

@@ -69,6 +69,7 @@ namespace backend_cube_solo.Api.Admins.Services
             {
                 new(ClaimTypes.Role, "Admin"),
                 new("AdminID", admin.AdminId.ToString()),
+                new("EmployeeID", admin.EmployeeId.ToString())
             };
 
             // Signer le token de connexion JWT
