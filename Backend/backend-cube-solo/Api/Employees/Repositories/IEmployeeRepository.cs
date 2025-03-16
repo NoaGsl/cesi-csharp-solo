@@ -10,5 +10,7 @@ namespace backend_cube_solo.Api.Employees.Repositories
     {
         Task<Employee> GetByEmailAsync(string email);
         Task<PagedResult<ResponseEmployeeDto>> ListAsync(EmployeeQueryParams queryParams, CancellationToken cancellationToken = default);
+
+        Task<ResponseEmployeeDto> GetById(int id, CancellationToken cancellationToken = default);
     }
 }

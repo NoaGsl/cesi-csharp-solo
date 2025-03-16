@@ -23,6 +23,8 @@ namespace backend_cube_solo.Api.Employees.Repositories
             return employee;
         }
 
+
+
         public async Task<PagedResult<ResponseEmployeeDto>> ListAsync(EmployeeQueryParams queryParams, CancellationToken cancellationToken = default)
         {
             IQueryable<ResponseEmployeeDto> query = _context.Employees
@@ -66,8 +68,7 @@ namespace backend_cube_solo.Api.Employees.Repositories
                     e.LastName.ToLower().StartsWith(term) ||
                     e.LandlinePhoneNumber.ToLower().StartsWith(term) ||
                     e.MobilePhoneNumber.ToLower().StartsWith(term) ||
-                    e.Email.ToLower().StartsWith(term) ||
-                    e.IsAdmin.ToString().StartsWith(term)
+                    e.Email.ToLower().StartsWith(term)
                 );
             }
 
@@ -97,6 +98,40 @@ namespace backend_cube_solo.Api.Employees.Repositories
                 PageSize = queryParams.size,
                 TotalCount = totalCount
             };
+        }
+
+        public async Task<ResponseEmployeeDto> GetById(int id, CancellationToken cancellationToken = default)
+        {
+            ResponseEmployeeDto? employee = await _context.Employees
+                .AsNoTracking()
+                .Where(e => e.EmployeeId == id)
+                .Select(e => new ResponseEmployeeDto
+                {
+                    Id = e.EmployeeId,
+                    FirstName = e.FirstName,
+                    LastName = e.LastName,
+                    LandlinePhoneNumber = e.LandlinePhoneNumber,
+                    MobilePhoneNumber = e.MobilePhoneNumber,
+                    Email = e.Email,
+                    IsAdmin = e.IsAdmin,
+                    JoinDate = e.JoinDate,
+                    LeaveDate = e.LeaveDate,
+                    LocationId = e.LocationId,
+                    DepartmentId = e.DepartmentId,
+                    Location = new ResponseLocationDto
+                    {
+                        Id = e.Location.LocationId,
+                        City = e.Location.City
+                    },
+                    Department = new ResponseDepartmentDto
+                    {
+                        Id = e.Department.DepartmentId,
+                        Name = e.Department.Name
+                    }
+                })
+                .FirstOrDefaultAsync(cancellationToken);
+
+            return employee ?? throw new KeyNotFoundException("Employee not found");
         }
     }
 }
