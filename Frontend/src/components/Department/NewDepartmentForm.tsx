@@ -22,13 +22,35 @@ const NewDepartmentForm = ({ RefreshDepartments }: NewDepartmentFormProps) => {
         body: JSON.stringify({ name }),
       });
 
-      if (!response.ok) {
-        throw new Error("Failed to add new department");
+      const data = await response.json();
+
+      // DTO validation errors are returned as a 400 status code
+      if (response.status === 400 && data.errors) {
+        Object.values(data.errors as { [key: string]: string[] }).forEach(
+          (messages: string[]) => {
+            messages.forEach((message: string) => {
+              toast.error(message);
+            });
+          }
+        );
+        return;
       }
 
-      setName("");
-      RefreshDepartments();
-      toast.success("Service ajouté avec succès");
+      // Custom error message from the api
+
+      if (data.ExceptionMessage) {
+        toast.error(data.ExceptionMessage);
+        return;
+      }
+
+      if (response.status === 200) {
+        toast.success("Service ajouté avec succès");
+        setName("");
+        RefreshDepartments();
+        return;
+      }
+
+      throw new Error("Erreur lors de l'ajout du service");
     } catch (err: any) {
       toast.error(err.message);
     } finally {

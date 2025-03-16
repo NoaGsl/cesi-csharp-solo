@@ -68,8 +68,7 @@ namespace backend_cube_solo.Api.Employees.Repositories
                     e.LastName.ToLower().StartsWith(term) ||
                     e.LandlinePhoneNumber.ToLower().StartsWith(term) ||
                     e.MobilePhoneNumber.ToLower().StartsWith(term) ||
-                    e.Email.ToLower().StartsWith(term) ||
-                    e.IsAdmin.ToString().StartsWith(term)
+                    e.Email.ToLower().StartsWith(term)
                 );
             }
 

@@ -55,15 +55,9 @@ namespace backend_cube_solo.Api.Employees.Services
         {
             Employee employee = await _employeeRepository.FindAsync(id) ?? throw new KeyNotFoundException("Employee not found");
 
-            if (updateEmployeeDto.LocationId.HasValue)
-            {
-                _ = await _locationRepository.FindAsync(updateEmployeeDto.LocationId.Value) ?? throw new KeyNotFoundException("Location not found");
-            }
+            _ = await _locationRepository.FindAsync(updateEmployeeDto.LocationId) ?? throw new KeyNotFoundException("Location not found");
 
-            if (updateEmployeeDto.DepartmentId.HasValue)
-            {
-                _ = await _departmentRepository.FindAsync(updateEmployeeDto.DepartmentId.Value) ?? throw new KeyNotFoundException("Department not found");
-            }
+            _ = await _departmentRepository.FindAsync(updateEmployeeDto.DepartmentId) ?? throw new KeyNotFoundException("Department not found");
 
             if (updateEmployeeDto.Email != employee.Email)
             {

@@ -51,8 +51,8 @@ namespace backend_cube_solo.Api.Employees.Extensions
             employee.Email = updateEmployeeDto.Email ?? employee.Email;
             employee.IsAdmin = updateEmployeeDto.IsAdmin ?? employee.IsAdmin;
             employee.LeaveDate = updateEmployeeDto.LeaveDate;
-            employee.LocationId = updateEmployeeDto.LocationId ?? employee.LocationId;
-            employee.DepartmentId = updateEmployeeDto.DepartmentId ?? employee.DepartmentId;
+            employee.LocationId = updateEmployeeDto.LocationId;
+            employee.DepartmentId = updateEmployeeDto.DepartmentId;
         }
     }
 }

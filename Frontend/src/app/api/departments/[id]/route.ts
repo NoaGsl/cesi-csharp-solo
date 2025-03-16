@@ -27,7 +27,7 @@ export async function PUT(request: NextRequest, { params }: RequestProps) {
 
     const data = await response.json();
 
-    return NextResponse.json(data);
+    return NextResponse.json(data, { status: response.status });
   } catch (error: unknown) {
     if (error instanceof Error) {
       return NextResponse.json({ error: error.message }, { status: 500 });

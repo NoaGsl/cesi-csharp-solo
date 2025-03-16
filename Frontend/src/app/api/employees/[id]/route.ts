@@ -24,8 +24,6 @@ export async function PUT(request: NextRequest, { params }: RequestProps) {
   try {
     const body = await request.json();
 
-    console.log(body);
-
     const token = request.cookies.get("token")?.value;
 
     const headers: HeadersInit = {
@@ -44,14 +42,22 @@ export async function PUT(request: NextRequest, { params }: RequestProps) {
 
     const data = await response.json();
 
-    return NextResponse.json(data);
+    if (response.status === 200) {
+      return NextResponse.json(data);
+    }
+
+    if (response.status === 400) {
+      return NextResponse.json(data, { status: 400 });
+    }
+
+    console.error(data);
+    return NextResponse.json(data, { status: response.status });
   } catch (error: unknown) {
     if (error instanceof Error) {
       return NextResponse.json({ error: error.message }, { status: 500 });
     }
   }
 }
-
 
 export async function DELETE(request: NextRequest, { params }: RequestProps) {
   const { id } = await params;
@@ -70,14 +76,11 @@ export async function DELETE(request: NextRequest, { params }: RequestProps) {
     });
 
     if (response.status === 204) {
-      return NextResponse.json(
-        { status: 204 }
-      );
+      return NextResponse.json({ status: 204 });
     }
 
     const data = await response.json();
     throw new Error(data.ExceptionMessage);
-
   } catch (error: unknown) {
     if (error instanceof Error) {
       return NextResponse.json({ error: error.message }, { status: 500 });

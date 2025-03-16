@@ -34,9 +34,31 @@ const EmployeeUpdateForm = ({
         toast.success("Employé mis à jour avec succès");
         setDefaultEmployee(employee);
         setEditing(false);
-      } else {
-        toast.error("Erreur lors de la mise à jour de l'employé");
+        return;
       }
+
+      const data = await response.json();
+
+      if (response.status === 400 && data.errors) {
+        Object.values(data.errors as { [key: string]: string[] }).forEach(
+          (messages: string[]) => {
+            messages.forEach((message: string) => {
+              toast.error(message);
+            });
+          }
+        );
+        return;
+      }
+
+      // Custom error message from the api
+      if (data.ExceptionMessage) {
+        toast.error(data.ExceptionMessage);
+        return;
+      }
+
+      toast.error("Erreur lors de la mise à jour de l'employé");
+
+
     } catch (error) {
       console.error("Erreur lors de la mise à jour de l'employé:", error);
     }
@@ -160,10 +182,7 @@ const EmployeeUpdateForm = ({
               setEmployee({ ...employee, isAdmin: e.target.checked })
             }
           />
-          <label
-            htmlFor="isAdmin"
-            className="ml-2 font-medium text-gray-700"
-          >
+          <label htmlFor="isAdmin" className="ml-2 font-medium text-gray-700">
             {" "}
             Administrateur
           </label>

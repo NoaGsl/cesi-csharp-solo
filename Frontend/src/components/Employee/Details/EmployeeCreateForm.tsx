@@ -46,7 +46,7 @@ const EmployeeCreateForm = () => {
       const data = await response.json();
 
       // DTO validation errors are returned as a 400 status code
-      if (response.status === 400) {
+      if (response.status === 400 && data.errors) {
         Object.values(data.errors as { [key: string]: string[] }).forEach(
           (messages: string[]) => {
             messages.forEach((message: string) => {
@@ -58,12 +58,8 @@ const EmployeeCreateForm = () => {
       }
 
       // Custom error message from the api
-      if (response.status === 404) {
-        toast.error(data.ExceptionMessage);
-        return;
-      }
 
-      if (response.status === 500 && data.ExceptionMessage) {
+      if (data.ExceptionMessage) {
         toast.error(data.ExceptionMessage);
         return;
       }

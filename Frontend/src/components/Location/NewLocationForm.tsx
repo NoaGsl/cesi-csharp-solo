@@ -22,14 +22,34 @@ const NewLocationForm = ({ RefreshLocations }: NewLocationFormProps) => {
         body: JSON.stringify({ city }),
       });
 
-      if (!response.ok) {
-        throw new Error("Failed to add new location");
+      const data = await response.json();
+
+      // DTO validation errors are returned as a 400 status code
+      if (response.status === 400 && data.errors) {
+        Object.values(data.errors as { [key: string]: string[] }).forEach(
+          (messages: string[]) => {
+            messages.forEach((message: string) => {
+              toast.error(message);
+            });
+          }
+        );
+        return;
       }
 
-      setCity("");
+      // Custom error message from the api
+      if (data.ExceptionMessage) {
+        toast.error(data.ExceptionMessage);
+        return;
+      }
 
-      RefreshLocations();
-      toast.success("Site ajouté avec succès");
+      if (response.status === 200) {
+        setCity("");
+        RefreshLocations();
+        toast.success("Site ajouté avec succès");
+        return;
+      }
+
+      throw new Error("Erreur lors de l'ajout du service");
     } catch (err: any) {
       toast.error(err.message);
     } finally {
