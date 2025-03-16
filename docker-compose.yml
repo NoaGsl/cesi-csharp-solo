@@ -1,11 +1,12 @@
-version: '3.8'
-
 services:
   backend:
     container_name: api
     build:
       context: ./Backend/backend-cube-solo
       dockerfile: Dockerfile
+      args:
+        - JWT_SECRET=${JWT_SECRET}
+        - DATABASE_CONNECTION_STRING=${DATABASE_CONNECTION_STRING}
     ports:
       - "7213:7213"
     environment:
@@ -16,17 +17,25 @@ services:
     networks:
       - app-network
 
-  # frontend:
-  #   build:
-  #     context: ./frontend
-  #     dockerfile: Dockerfile
-  #   ports:
-  #     - "3000:3000"
-  #   environment:
-  #   depends_on:
-  #     - backend
-  #   networks:
-  #     - app-network
+  frontend:
+    container_name: frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        - API_URL=${API_URL}
+        - NEXT_PUBLIC_ADMIN_SEQUENCE=${NEXT_PUBLIC_ADMIN_SEQUENCE}
+        - JWT_SECRET=${JWT_SECRET}
+    ports:
+      - "3000:3000"
+    environment:
+      API_URL: ${API_URL}
+      NEXT_PUBLIC_ADMIN_SEQUENCE: ${NEXT_PUBLIC_ADMIN_SEQUENCE}
+      JWT_SECRET: ${JWT_SECRET}
+    depends_on:
+      - backend
+    networks:
+      - app-network
 
   db:
     image: postgres:13-alpine
