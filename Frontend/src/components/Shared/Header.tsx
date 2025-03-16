@@ -12,7 +12,7 @@ const Header = () => {
   }
 
   return (
-    <header className="sticky top-0 flex flex-row justify-between w-full bg-blue-500 text-white p-4">
+    <header className="sticky top-0 flex z-50 flex-row justify-between w-full bg-blue-500 text-white p-4">
       <button
         onClick={() => router.push("/employees")}
         className="rounded-md bg-white text-blue-500 p-2 text-sm md:text-base cursor-pointer hover:bg-gray-200"
