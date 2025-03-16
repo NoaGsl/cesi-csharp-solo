@@ -1,8 +1,5 @@
 "use client";
 
-import DepartmentFilter from "@/components/Department/DepartmentFilter";
-import Input from "@/components/Forms/Input";
-import LocationFilter from "@/components/Location/LocationFilter";
 import { IEmployee } from "@/lib/types";
 import { useEffect, useState } from "react";
 import EmployeeUpdateForm from "./UpdateForm/EmployeeUpdateForm";

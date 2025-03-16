@@ -10,7 +10,7 @@ export async function GET(req: NextRequest) {
   if (token) {
     try {
       await jwtVerify(token, new TextEncoder().encode(JWT_SECRET));
-    } catch (error) {
+    } catch {
       return NextResponse.json({ authenticated: false }, { status: 200 });
     }
 

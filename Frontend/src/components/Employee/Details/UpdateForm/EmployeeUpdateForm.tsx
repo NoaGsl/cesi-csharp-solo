@@ -82,7 +82,7 @@ const EmployeeUpdateForm = ({
 
   return (
     <section className="bg-white mb-6 p-6 rounded shadow-md w-full max-w-md">
-      <h1 className="text-2xl font-bold mb-4">Modifier l'employé</h1>
+      <h1 className="text-2xl font-bold mb-4">Modifier l&apos;employé</h1>
       <form className="space-y-4" onSubmit={handleSubmit}>
         <div className="mb-4">
           <Input

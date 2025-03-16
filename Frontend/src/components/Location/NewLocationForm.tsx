@@ -50,8 +50,8 @@ const NewLocationForm = ({ RefreshLocations }: NewLocationFormProps) => {
       }
 
       throw new Error("Erreur lors de l'ajout du service");
-    } catch (err: any) {
-      toast.error(err.message);
+    } catch (err: unknown) {
+      if (err instanceof Error) toast.error(err.message);
     } finally {
       setLoading(false);
     }

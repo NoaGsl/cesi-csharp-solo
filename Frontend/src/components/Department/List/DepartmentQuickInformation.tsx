@@ -31,7 +31,7 @@ const DepartmentQuickInformation = ({ department, refreshDepartments }: Departme
       setEditing(false);
       toast.success("Service mis à jour avec succès");
       refreshDepartments();
-    } catch (error) {
+    } catch {
       setEditing(false);
       toast.error("Erreur lors de la mise à jour du service");
     }

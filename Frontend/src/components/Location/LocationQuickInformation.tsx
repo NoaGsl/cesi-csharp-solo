@@ -34,7 +34,7 @@ const LocationQuickInformation = ({
       setEditing(false);
       toast.success("Ville mise à jour avec succès");
       refreshLocations();
-    } catch (error) {
+    } catch {
       setEditing(false);
       toast.error("Erreur lors de la mise à jour de la ville");
     }
