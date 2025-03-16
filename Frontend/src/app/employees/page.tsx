@@ -5,6 +5,7 @@ import EmployeeFiltersBar from "@/components/Employee/EmployeeFiltersBar";
 import { IEmployee, IPagedResponse } from "@/lib/types";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState, Suspense } from "react";
+import { useAuth } from "@/hooks/AuthContext";
 
 const EmployeesPage = () => {
   return (
@@ -15,6 +16,8 @@ const EmployeesPage = () => {
 };
 
 const Employees = () => {
+  const { isConnected } = useAuth();
+
   const [employees, setEmployees] = useState<IPagedResponse<IEmployee> | null>(
     null
   );
@@ -90,6 +93,15 @@ const Employees = () => {
       <h1 className="text-2xl font-bold my-4">Liste des employés</h1>
 
       <EmployeeFiltersBar />
+
+      {isConnected && (
+        <button
+          className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded my-4 cursor-pointer"
+          onClick={() => router.push("/employees/create")}
+        >
+          Ajouter un employé
+        </button>
+      )}
 
       <EmployeeList
         employees={employees}
