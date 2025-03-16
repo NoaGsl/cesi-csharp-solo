@@ -6,6 +6,9 @@ services:
     build:
       context: ./Backend/backend-cube-solo
       dockerfile: Dockerfile
+      args:
+        - JWT_SECRET=${JWT_SECRET}
+        - DATABASE_CONNECTION_STRING=${DATABASE_CONNECTION_STRING}
     ports:
       - "7213:7213"
     environment:
@@ -21,6 +24,10 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
+      args:
+        - API_URL=${API_URL}
+        - NEXT_PUBLIC_ADMIN_SEQUENCE=${NEXT_PUBLIC_ADMIN_SEQUENCE}
+        - JWT_SECRET=${JWT_SECRET}
     ports:
       - "3000:3000"
     environment:

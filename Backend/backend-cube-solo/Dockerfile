@@ -1,6 +1,16 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /app
 
+
+# Build-time arguments
+ARG JWT_SECRET
+ARG DATABASE_CONNECTION_STRING
+
+# Pass ARG values as ENV so they persist
+ENV JWT_SECRET=$JWT_SECRET
+ENV DATABASE_CONNECTION_STRING=$DATABASE_CONNECTION_STRING
+
+
 COPY *.csproj ./
 RUN dotnet restore
 
