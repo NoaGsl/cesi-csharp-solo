@@ -16,12 +16,3 @@ dotnet add package Microsoft.AspNetCore.OpenApi --version 8.0.10
 dotnet add package Swashbuckle.AspNetCore --version 7.1.0
 dotnet add package DotNetEnv
 ```
-
-## Database
-
-Run the sql script in the database to create the tables then run the following command to scaffold the database.
-
-```bash
-dotnet ef dbcontext scaffold "DATABASE_URL" Npgsql.EntityFrameworkCore.PostgreSQL --output-dir Models
-```
-
