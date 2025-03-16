@@ -5,6 +5,7 @@ export interface IEmployee {
   landlinePhoneNumber: string;
   mobilePhoneNumber: string;
   email: string;
+  isAdmin: boolean;
   departmentId: number;
   locationId: number;
   department?: IDepartment;
